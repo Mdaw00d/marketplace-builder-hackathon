@@ -48,7 +48,7 @@ const products = [
     imageUrl: "/pant.jpg",
     label: "Sales",
     labelColor: "bg-orange-500",
-    name: "Men's Pant",
+    name: "Mens Pant",
     price: "1499",
     category: "Garments", // Added category field
   },
@@ -57,7 +57,7 @@ const products = [
     imageUrl: "/tube.jpg",
     label: "Sales",
     labelColor: "bg-orange-500",
-    name: "Women's Tube Top",
+    name: "Womens Tube Top",
     price: "999",
     category: "Accessories", // Added category field
   },
@@ -66,7 +66,7 @@ const products = [
     imageUrl: "/shirt.jpg",
     label: "Sales",
     labelColor: "bg-orange-500",
-    name: "Men's Shirt",
+    name: "Mens Shirt",
     price: "1999",
     category: "Garments", // Added category field
   },
