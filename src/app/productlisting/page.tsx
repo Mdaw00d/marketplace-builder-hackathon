@@ -7,9 +7,11 @@ import Footer from "../footer";
 
 type Product = {
   id: number;
+  _id?: string; // Some APIs use _id instead of id
   name: string;
   price: number | string;
   imageUrl: string;
+  description?: string;
   isNew?: boolean;
   salePrice?: number;
   label?: string;
@@ -31,6 +33,8 @@ export default function Products() {
         const response = await fetch("/api/products");
         if (response.ok) {
           const data: Product[] = await response.json();
+          console.log("Fetched products:", data); // Debugging
+
           setProducts(data);
           setFilteredProducts(data);
 
@@ -58,6 +62,17 @@ export default function Products() {
         ? products.filter((product) => product.category === category)
         : products
     );
+  };
+
+  const addToCart = (product: Product) => {
+    const cartProduct = {
+      ...product,
+      imageUrl: product.imageUrl || "/placeholder.jpg",
+      description: product.description || "No description available",
+      _id: product._id || product.id.toString(), // Convert id to string if _id is missing
+    };
+    console.log("Adding to cart:", cartProduct);
+    // Your cart handling logic here
   };
 
   if (loading) {
@@ -108,7 +123,7 @@ export default function Products() {
               <div className="card group w-full h-full relative cursor-pointer border rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
                 <div className="img relative">
                   <Image
-                    src={product.imageUrl}
+                    src={product.imageUrl || "/placeholder.jpg"}
                     alt={product.name}
                     width={300}
                     height={200}
@@ -136,30 +151,19 @@ export default function Products() {
                   <h5 className="mt-2 font-bold">
                     Rs. {product.salePrice || product.price}
                   </h5>
-                  <div
-                    className="w-[44px] h-[44px] mt-4 rounded-md relative group overflow-hidden flex flex-col items-center bg-[#F0F2F3] hover:bg-[#007580] transition-colors duration-300 cursor-pointer"
+                  <button
+                    onClick={() => addToCart(product)}
+                    className="w-full text-white hover:text-black h-[50px] mt-5 rounded-md relative group overflow-hidden hover:bg-gray-400 flex justify-center items-center bg-[#007580] transition-colors duration-300 cursor-pointer"
                   >
-                    <Image
-                      src="/cart.png"
-                      alt="Cart Icon"
-                      width={28}
-                      height={28}
-                      className="w-7 h-7 mt-2 transition-opacity duration-300 group-hover:opacity-0"
-                    />
-                    <Image
-                      src="/cart.png"
-                      alt="Cart Icon"
-                      width={28}
-                      height={28}
-                      className="w-7 h-7 mt-2 ml-2 absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                    />
-                  </div>
+                    ADD TO CART
+                  </button>
                 </div>
               </div>
             </Link>
           ))}
         </div>
       </div>
+
       <Footer />
     </main>
   );
