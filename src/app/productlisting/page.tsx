@@ -161,12 +161,14 @@ export default function Products() {
                     onClick={() =>
                       addToCart({
                         ...product,
+                        _id: product.id.toString(), // Convert id to _id
+                        description: "No description available", // Default description
+                        image: product.imageUrl, // Use imageUrl as image
+                        title: product.name, // Use name as title
                         imageUrl: product.imageUrl || "/placeholder.jpg",
-                        _id: product._id || product.id.toString(), // Ensure _id exists
-                        description:
-                          product.description || "No description available", // Ensure description exists
-                      })
+                      } as Product)
                     }
+                    
                     className="md:w-[600px] text-white hover:text-black md:h-[50px] mt-5 mr-2 rounded-md relative group overflow-hidden hover:bg-gray-400 flex justify-center items-center bg-[#007580] transition-colors duration-300 cursor-pointer"
                   >
                     ADD TO CART
