@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useState, useEffect, Key } from "react";
 
 export type Product = {
-  image: string; // Changed from 'any' to 'string'
+  image: string;
   title: string;
   description: string;
   _id: Key | null | undefined;
@@ -12,7 +12,7 @@ export type Product = {
   price: number | string;
   imageUrl: string;
   salePrice?: number;
-  extraAttributes?: Record<string, unknown>; // Replacing dynamic key-value pairs
+  extraAttributes?: Record<string, unknown>;
 };
 
 type CartItem = {
@@ -44,7 +44,6 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   });
 
   useEffect(() => {
-    console.log("CartProvider Mounted"); // Debugging log
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
@@ -77,9 +76,20 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
 export const useCart = () => {
   const context = useContext(CartContext);
-  console.log("useCart called, context:", context); // Debugging log
   if (!context) {
     throw new Error("useCart must be used within a CartProvider");
   }
   return context;
 };
+
+// ✅ Next.js Page Component
+const ProductsPage: React.FC = () => {
+  return (
+    <CartProvider>
+      <h1>Products Page</h1>
+      {/* Add your products list here */}
+    </CartProvider>
+  );
+};
+
+export default ProductsPage; // ✅ Ensure default export
