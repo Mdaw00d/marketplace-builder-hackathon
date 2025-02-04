@@ -1,95 +1,66 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect, Key } from "react";
+import React, { useEffect, useState } from "react";
+import { useCart } from "@/hooks/useCart";
 
 export type Product = {
-  image: string;
-  title: string;
-  description: string;
-  _id: Key | null | undefined;
   id: number;
   name: string;
-  price: number | string;
+  price: number;
   imageUrl: string;
-  salePrice?: number;
-  extraAttributes?: Record<string, unknown>;
+  description: string;
+  image: string;  
+  title: string; 
+  _id: string | null;
 };
 
-type CartItem = {
-  product: Product;
-  quantity: number;
-};
-
-type CartContextType = {
-  cart: CartItem[];
-  addToCart: (product: Product, quantity?: number) => void;
-  removeFromCart: (productId: number) => void;
-  clearCart: () => void;
-};
-
-const CartContext = createContext<CartContextType | undefined>(undefined);
-
-export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [cart, setCart] = useState<CartItem[]>(() => {
-    if (typeof window !== "undefined") {
-      try {
-        const storedCart = localStorage.getItem("cart");
-        return storedCart ? JSON.parse(storedCart) : [];
-      } catch (error) {
-        console.error("Error parsing cart from localStorage:", error);
-        return [];
-      }
-    }
-    return [];
-  });
+const ProductsPage = () => {
+  const { addToCart } = useCart();
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
-
-  const addToCart = (product: Product, quantity: number = 1) => {
-    setCart((prevCart) => {
-      const existingItem = prevCart.find((item) => item.product.id === product.id);
-      if (existingItem) {
-        return prevCart.map((item) =>
-          item.product.id === product.id
-            ? { ...item, quantity: item.quantity + quantity }
-            : item
-        );
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch("/api/products"); // Replace with your actual API endpoint
+        if (!response.ok) throw new Error("Failed to fetch products");
+        const data: Product[] = await response.json();
+        setProducts(data);
+      } catch (err) {
+        setError((err as Error).message);
+      } finally {
+        setLoading(false);
       }
-      return [...prevCart, { product, quantity }];
-    });
-  };
+    };
 
-  const removeFromCart = (productId: number) => {
-    setCart((prevCart) => prevCart.filter((item) => item.product.id !== productId));
-  };
+    fetchProducts();
+  }, []);
 
-  const clearCart = () => setCart([]);
+  if (loading) return <p className="text-center text-gray-500">Loading products...</p>;
+  if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart }}>
-      {children}
-    </CartContext.Provider>
+    <main className="max-w-4xl mx-auto p-6">
+      <h1 className="text-2xl font-bold mb-4">Products</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {products.map((product) => (
+          <div key={product.id} className="border p-4 rounded-md shadow-md">
+            <img src={product.imageUrl} alt={product.name} className="w-full h-40 object-cover rounded-md" />
+            <h2 className="text-lg font-semibold mt-2">{product.name}</h2>
+            <p className="text-gray-600">{product.description}</p>
+            <p className="text-xl font-bold mt-2">${product.price}</p>
+            <button
+              className="bg-blue-600 text-white px-4 py-2 rounded-md mt-2"
+              onClick={() => addToCart(product)}
+            >
+              Add to Cart
+            </button>
+          </div>
+        ))}
+      </div>
+    </main>
   );
 };
 
-export const useCart = () => {
-  const context = useContext(CartContext);
-  if (!context) {
-    throw new Error("useCart must be used within a CartProvider");
-  }
-  return context;
-};
-
-// ✅ Next.js Page Component
-const ProductsPage: React.FC = () => {
-  return (
-    <CartProvider>
-      <h1>Products Page</h1>
-      {/* Add your products list here */}
-    </CartProvider>
-  );
-};
-
-export default ProductsPage; // ✅ Ensure default export
+export default ProductsPage;
