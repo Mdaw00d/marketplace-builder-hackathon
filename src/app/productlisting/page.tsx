@@ -104,7 +104,9 @@ export default function Products() {
           <select
             className="border border-gray-300 rounded-md p-2"
             onChange={(e) =>
-              handleCategoryChange(e.target.value === "" ? null : e.target.value)
+              handleCategoryChange(
+                e.target.value === "" ? null : e.target.value
+              )
             }
             value={selectedCategory || ""}
           >
@@ -119,7 +121,11 @@ export default function Products() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredProducts.map((product) => (
-            <Link key={product.id} href={`/productlisting/${product.id}`} passHref>
+            <Link
+              key={product.id}
+              href={`/productlisting/${product.id}`}
+              passHref
+            >
               <div className="card group w-full h-full relative cursor-pointer border rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
                 <div className="img relative">
                   <Image
@@ -152,8 +158,16 @@ export default function Products() {
                     Rs. {product.salePrice || product.price}
                   </h5>
                   <button
-                    onClick={() => addToCart(product)}
-                    className="w-full text-white hover:text-black h-[50px] mt-5 rounded-md relative group overflow-hidden hover:bg-gray-400 flex justify-center items-center bg-[#007580] transition-colors duration-300 cursor-pointer"
+                    onClick={() =>
+                      addToCart({
+                        ...product,
+                        imageUrl: product.imageUrl || "/placeholder.jpg",
+                        _id: product._id || product.id.toString(), // Ensure _id exists
+                        description:
+                          product.description || "No description available", // Ensure description exists
+                      })
+                    }
+                    className="md:w-[600px] text-white hover:text-black md:h-[50px] mt-5 mr-2 rounded-md relative group overflow-hidden hover:bg-gray-400 flex justify-center items-center bg-[#007580] transition-colors duration-300 cursor-pointer"
                   >
                     ADD TO CART
                   </button>
