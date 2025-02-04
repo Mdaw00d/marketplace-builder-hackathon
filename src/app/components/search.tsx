@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link"; // Import Link from Next.js
+import Image from "next/image";
 
 type Product = {
   id: number;
@@ -61,7 +62,7 @@ const Search = () => {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
-      <img src="/search.jpg" className="w-7 h-7" alt="Search icon" />
+      <Image src="/search.jpg" width={28} height={28} alt="Search icon" />
       {loading && <div className="absolute top-full mt-2">Loading...</div>}
       {results.length > 0 && (
         <ul className="absolute top-full mt-2 bg-white border shadow-lg z-50 p-2 px-2 w-52">

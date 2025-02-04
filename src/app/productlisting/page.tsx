@@ -14,7 +14,7 @@ type Product = {
   salePrice?: number;
   label?: string;
   labelColor?: string;
-  category?: string; // Add category to the Product type
+  category?: string;
 };
 
 export default function Products() {
@@ -34,7 +34,6 @@ export default function Products() {
           setProducts(data);
           setFilteredProducts(data);
 
-          // Extract unique categories from products
           const uniqueCategories = Array.from(
             new Set(data.map((product) => product.category || "Uncategorized"))
           ).sort() as string[];
@@ -42,7 +41,8 @@ export default function Products() {
         } else {
           setError(`Failed to fetch: ${response.status}`);
         }
-      } catch (error) {
+      } catch (err) {
+        console.error("Error fetching products:", err);
         setError("Failed to fetch products. Please try again later.");
       } finally {
         setLoading(false);
@@ -85,7 +85,6 @@ export default function Products() {
           All Products
         </h2>
 
-        {/* Category Filter Dropdown */}
         <div className="mb-8 flex justify-end">
           <select
             className="border border-gray-300 rounded-md p-2"
@@ -137,7 +136,6 @@ export default function Products() {
                   <h5 className="mt-2 font-bold">
                     Rs. {product.salePrice || product.price}
                   </h5>
-                  {/* Cart Button (UI Only) */}
                   <div
                     className="w-[44px] h-[44px] mt-4 rounded-md relative group overflow-hidden flex flex-col items-center bg-[#F0F2F3] hover:bg-[#007580] transition-colors duration-300 cursor-pointer"
                   >

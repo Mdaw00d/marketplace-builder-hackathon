@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Image from "next/image";
 
 interface Product {
   id: number;
@@ -25,18 +26,15 @@ export default function CategoryComponent() {
         }
         const data: Product[] = await response.json();
         
-        // Log the API response for debugging
         console.log("API Response:", data);
 
         setProducts(data);
         setFilteredProducts(data);
 
-        // Extract unique categories
         const uniqueCategories = Array.from(
           new Set(data.map((product) => product.category))
         ).sort() as string[];
 
-        // Log the extracted categories for debugging
         console.log("Extracted Categories:", uniqueCategories);
 
         setCategories(uniqueCategories);
@@ -53,8 +51,6 @@ export default function CategoryComponent() {
 
   const handleCategoryChange = (category: string | null) => {
     setSelectedCategory(category);
-
-    // Log the selected category and filtered products for debugging
     console.log("Selected Category:", category);
 
     const filtered = category
@@ -105,9 +101,11 @@ export default function CategoryComponent() {
                 key={product.id}
                 className="product-card border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow"
               >
-                <img
+                <Image
                   src={product.imageUrl}
                   alt={product.name}
+                  width={300}
+                  height={200}
                   className="w-full h-48 object-cover"
                 />
                 <div className="p-4">

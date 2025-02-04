@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image"; // Import the Image component
 import AllProducts from "./components/AllProducts";
 
 function Hero() {
@@ -36,10 +37,12 @@ function Hero() {
       <br />
       {/* Banner Starts */}
       <div className="bg-black p-60 pb-32 ml-28 mr-36 rounded-2xl hidden lg:block">
-        <img
+        <Image
           className="ml-[350px] -mt-48 h-[400px] w-[400px] absolute hidden md:block"
-          src="perfume.jpg"
+          src="/perfume.jpg"
           alt="Perfume"
+          width={400}
+          height={400}
         />
         <h2 className="text-white -ml-32 -mt-32 font-sans font-normal text-2xl">
           Best Deal Online on PERFUMES
@@ -56,10 +59,12 @@ function Hero() {
           <div className="bg-white h-2 w-2 rounded-2xl -ml-[-4px] -mt-2"></div>
         </div>
       </div>
-      <img
+      <Image
         className="md:hidden"
         src="https://cdn.create.vista.com/downloads/0d580ee7-3241-41e5-bb21-47ec3df2dc0a_1024.jpeg"
         alt="Banner Image"
+        width={1024}
+        height={768}
       />
       {/* Heading */}
       <div className="py-16">
@@ -87,58 +92,72 @@ function Hero() {
       {/* Photos2 */}
       <div className="grid grid-cols-2 md:grid md:grid-cols-7 gap-y-10  ">
         <div>
-          <img
+          <Image
             className=" transform hover:scale-105 hover:shadow-2xl duration-300 ease-in-out w-[850px] h-[200px]   "
-            src="shirt.jpg"
-            alt=""
+            src="/shirt.jpg"
+            alt="Shirts"
+            width={850}
+            height={200}
           />
           <h4 className="ml-[90px] md:ml-[60px]  font-bold">Shirts</h4>
         </div>
         <div>
-          <img
+          <Image
             className=" transform hover:scale-105 hover:shadow-2xl duration-300 ease-in-out w-[850px] h-[200px] "
-            src="tube.jpg"
-            alt=""
+            src="/tube.jpg"
+            alt="Cosmetics"
+            width={850}
+            height={200}
           />
           <h4 className="ml-[90px] md:ml-[60px]  font-bold">Cosmetics</h4>
         </div>
         <div>
-          <img
+          <Image
             className="transform hover:scale-105 hover:shadow-2xl duration-300 ease-in-out w-[850px] h-[200px]"
-            src="pant.jpg"
-            alt=""
+            src="/pant.jpg"
+            alt="Pants"
+            width={850}
+            height={200}
           />
           <h4 className="ml-[90px] md:ml-[60px]  font-bold">Pants</h4>
         </div>
         <div>
-          <img
+          <Image
             className="transform hover:scale-105 hover:shadow-2xl duration-300 ease-in-out w-[850px] h-[200px] "
-            src="scent.jpg"
-            alt=""
+            src="/scent.jpg"
+            alt="Scents"
+            width={850}
+            height={200}
           />
           <h4 className="ml-[90px] md:ml-[60px]  font-bold">Scents</h4>
         </div>
         <div>
-          <img
+          <Image
             className="transform hover:scale-105 hover:shadow-2xl duration-300 ease-in-out w-[850px] h-[200px]"
-            src="makeup.jpg"
-            alt=""
+            src="/makeup.jpg"
+            alt="Makeup"
+            width={850}
+            height={200}
           />
           <h4 className=" ml-[90px] md:ml-[60px]  font-bold">Makeup</h4>
         </div>
         <div>
-          <img
+          <Image
             className="transform hover:scale-105 hover:shadow-2xl duration-300 ease-in-out w-[850px] h-[200px]"
-            src="hoodie.jpg"
-            alt=""
+            src="/hoodie.jpg"
+            alt="Hoodie"
+            width={850}
+            height={200}
           />
           <h4 className="ml-[90px] md:ml-[70px]  font-bold">Hoodie</h4>
         </div>
         <div>
-          <img
+          <Image
             className="transform hover:scale-105 hover:shadow-2xl duration-300 ease-in-out w-[850px] h-[200px] md:-ml-0 ml-28  "
-            src="necklace.jpg"
-            alt=""
+            src="/necklace.jpg"
+            alt="Accessories"
+            width={850}
+            height={200}
           />
           <h4 className="ml-[185px]  md:ml-[60px]  font-bold">Accessories</h4>
         </div>
@@ -157,26 +176,32 @@ function Hero() {
       {/* Photos 3 */}
       <div className=" gap-x-2 ml-16 md:grid md:grid-cols-3 justify-around grid grid-cols-1 ">
         <div>
-          <img
+          <Image
             className="hover:scale-105 hover:shadow-lg transition-transform duration-300 w-[300px] h-[200px]  ml-6 "
-            src="brand1.jpg"
-            alt=""
+            src="/brand1.jpg"
+            alt="Brand 1"
+            width={300}
+            height={200}
           />
         </div>
 
         <div>
-          <img
+          <Image
             className="hover:scale-105 hover:shadow-lg transition-transform duration-300 w-[300px] h-[200px]  ml-6"
-            src="brand2.jpg"
-            alt=""
+            src="/brand2.jpg"
+            alt="Brand 2"
+            width={300}
+            height={200}
           />
         </div>
 
         <div>
-          <img
+          <Image
             className="hover:scale-105 hover:shadow-lg transition-transform duration-300 w-[300px] h-[200px]  ml-6"
-            src="brand3.jpg"
-            alt=""
+            src="/brand3.jpg"
+            alt="Brand 3"
+            width={300}
+            height={200}
           />
         </div>
       </div>
