@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useState, useEffect, Key } from "react";
 
 export type Product = {
-  image: any;
+  image: unknown;
   title: string;
   description: string;
   _id: Key | null | undefined;
