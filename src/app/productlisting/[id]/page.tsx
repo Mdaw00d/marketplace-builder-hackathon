@@ -9,16 +9,17 @@ import Link from "next/link";
 import { useCart } from "@/hooks/useCart"; // Hook for cart functionality
 
 type Product = {
-  image?: { asset?: { url?: string } };
-  title?: string;
   id: number;
+  _id?: string; // Some APIs use _id instead of id
   name: string;
   price: number | string;
-  imageUrl: string; // Ensure it's always a string
+  imageUrl: string;
+  description?: string;
   isNew?: boolean;
   salePrice?: number;
   label?: string;
   labelColor?: string;
+  category?: string;
 };
 
 export default function ProductDetail() {
@@ -38,12 +39,14 @@ export default function ProductDetail() {
             throw new Error(`Failed to fetch products: ${response.status}`);
           }
           const products: Product[] = await response.json();
-          
+
           console.log("Fetched Products:", products); // Debugging step
 
           setProducts(products);
 
-          const foundProduct = products.find((p) => p.id.toString() === id.toString());
+          const foundProduct = products.find(
+            (p) => p.id.toString() === id.toString()
+          );
           if (!foundProduct) {
             setError("Product not found");
             return;
@@ -52,7 +55,10 @@ export default function ProductDetail() {
           // Ensure imageUrl is always a string
           setProduct({
             ...foundProduct,
-            imageUrl: foundProduct.imageUrl || foundProduct.image?.asset?.url || "/placeholder.jpg",
+            imageUrl:
+              foundProduct.imageUrl ||
+              foundProduct.image?.asset?.url ||
+              "/placeholder.jpg",
           });
         } catch (error) {
           console.error("Error fetching product:", error);
@@ -120,11 +126,18 @@ export default function ProductDetail() {
           </p>
 
           <button
-            onClick={() => addToCart({ ...product, imageUrl: product.imageUrl || "/placeholder.jpg" })}
-            className="md:w-[600px] text-white hover:text-black md:h-[50px] mt-5 mr-2 rounded-md relative group overflow-hidden hover:bg-gray-400 flex justify-center items-center bg-[#007580] transition-colors duration-300 cursor-pointer"
-          >
-            ADD TO CART
-          </button>
+  onClick={() =>
+    addToCart({
+      ...product,
+      title: product.name, // Ensure title is assigned
+      image: product.imageUrl, // Ensure image is assigned
+    })
+  }
+  className="md:w-[600px] text-white hover:text-black md:h-[50px] mt-5 mr-2 rounded-md relative group overflow-hidden hover:bg-gray-400 flex justify-center items-center bg-[#007580] transition-colors duration-300 cursor-pointer"
+>
+  ADD TO CART
+</button>
+
         </div>
       </div>
 
@@ -137,12 +150,20 @@ export default function ProductDetail() {
           {products
             .filter((item) => item.id !== product.id) // Exclude the current product
             .map((product) => (
-              <Link key={product.id} href={`/productlisting/${product.id}`} passHref>
+              <Link
+                key={product.id}
+                href={`/productlisting/${product.id}`}
+                passHref
+              >
                 <div className="card group w-full h-full relative cursor-pointer border rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
                   <div className="img relative">
                     <Image
                       className="w-full h-48 object-cover"
-                      src={product.imageUrl || product.image?.asset?.url || "/placeholder.jpg"} // Always a string
+                      src={
+                        product.imageUrl ||
+                        product.image?.asset?.url ||
+                        "/placeholder.jpg"
+                      } // Always a string
                       alt={product.name || "Product Image"}
                       width={300}
                       height={200}
@@ -166,4 +187,3 @@ export default function ProductDetail() {
     </main>
   );
 }
-  

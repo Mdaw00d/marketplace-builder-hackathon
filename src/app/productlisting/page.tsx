@@ -158,17 +158,16 @@ export default function Products() {
                     Rs. {product.salePrice || product.price}
                   </h5>
                   <button
-                    onClick={() =>
+                    onClick={(e) => {
+                      e.preventDefault(); // Prevents Link navigation issues
                       addToCart({
                         ...product,
-                        _id: product.id.toString(), // Convert id to _id
-                        description: "No description available", // Default description
-                        image: product.imageUrl, // Use imageUrl as image
-                        title: product.name, // Use name as title
+                        _id: product.id.toString(),
+                        description:
+                          product.description || "No description available",
                         imageUrl: product.imageUrl || "/placeholder.jpg",
-                      } as Product)
-                    }
-                    
+                      });
+                    }}
                     className="md:w-[600px] text-white hover:text-black md:h-[50px] mt-5 mr-2 rounded-md relative group overflow-hidden hover:bg-gray-400 flex justify-center items-center bg-[#007580] transition-colors duration-300 cursor-pointer"
                   >
                     ADD TO CART

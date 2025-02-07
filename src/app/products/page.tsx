@@ -9,10 +9,12 @@ export type Product = {
   price: number;
   imageUrl: string;
   description: string;
-  image: string;
-  title: string;
+  image: string;  
+  title: string; 
   _id: string | null;
 };
+
+
 
 const ProductsPage = () => {
   const { addToCart } = useCart();
@@ -47,8 +49,7 @@ const ProductsPage = () => {
     addToCart(formattedProduct);
   };
 
-  if (loading)
-    return <p className="text-center text-gray-500">Loading products...</p>;
+  if (loading) return <p className="text-center text-gray-500">Loading products...</p>;
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
   return (
@@ -57,20 +58,16 @@ const ProductsPage = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {products.map((product) => (
           <div key={product.id} className="border p-4 rounded-md shadow-md">
-            <img
-              src={product.imageUrl}
-              alt={product.name}
-              className="w-full h-40 object-cover rounded-md"
-            />
+            <img src={product.imageUrl} alt={product.name} className="w-full h-40 object-cover rounded-md" />
             <h2 className="text-lg font-semibold mt-2">{product.name}</h2>
             <p className="text-gray-600">{product.description}</p>
             <p className="text-xl font-bold mt-2">${product.price}</p>
             <button
-              className="bg-blue-600 text-white px-4 py-2 rounded-md mt-2"
-              onClick={() => handleAddToCart(product)}
-            >
-              Add to Cart
-            </button>
+  className="bg-blue-600 text-white px-4 py-2 rounded-md mt-2"
+  onClick={() => handleAddToCart(product)}
+>
+  Add to Cart
+</button>
           </div>
         ))}
       </div>

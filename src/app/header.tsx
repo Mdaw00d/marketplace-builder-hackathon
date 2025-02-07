@@ -23,16 +23,18 @@ function Header() {
               />
               <p className="hidden md:block">Deliver to 423651</p>
             </div>
+         
             <div className="flex gap-x-1">
               <Image
                 className="w-6 h-6"
-                src="/cart.png"
+                src="/profile-icon.jpg"
                 alt="Cart Icon"
                 width={24}
                 height={24}
               />
-              <p className="hidden md:block">All Offers</p>
+              <div> <p className="hidden md:block">Your Dashboard</p></div>
             </div>
+          
           </div>
         </div>
         {/* Nav1 Ends */}
@@ -43,7 +45,7 @@ function Header() {
             <div className="flex items-center space-x-5">
               <Sidebar />
             </div>
-            <Link href="/home" passHref>
+            <Link href="/" passHref>
               <div>
                 <div className="bg-slate-100 p-2 w-[200px] -ml-32 rounded-md border border-slate-100">
                   <Image
